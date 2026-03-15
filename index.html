@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -78,13 +78,10 @@
         .video-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
         .video-container:hover img { transform: scale(1.03); }
 
-        /* THE "WHITE RING" PLAY BUTTON */
         .play-button {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 72px; height: 72px;
-            background: rgba(0, 0, 0, 0.45);
-            border: 5px solid rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
+            width: 72px; height: 72px; background: rgba(0, 0, 0, 0.45);
+            border: 5px solid rgba(255, 255, 255, 0.9); border-radius: 50%;
             display: flex; align-items: center; justify-content: center; 
             z-index: 2; transition: all 0.2s ease;
         }
@@ -101,7 +98,8 @@
         .reel-title { font-weight: bold; font-size: 1rem; color: var(--text-main); margin-top: 15px; min-height: 40px; display: flex; align-items: center; justify-content: center; }
 
         /* BIO & CONTACT */
-        .bio-content { max-width: 900px; margin: 0 auto; color: var(--text-muted); line-height: 1.9; font-size: 1.15rem; text-align: center; margin-bottom: 40px; }
+        .bio-content { max-width: 950px; margin: 0 auto 60px; color: var(--text-muted); line-height: 2; font-size: 1.1rem; text-align: center; }
+        .bio-content p { margin-bottom: 25px; }
         .contact-list { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
         .contact-row {
             display: flex; justify-content: space-between; align-items: center;
@@ -224,7 +222,9 @@
     <section id="bio">
         <h2>Biography</h2>
         <div class="bio-content">
-            <p><strong>Julian Graham</strong> is a dynamic actor known for a variety of roles in TV and film. He has recurred on shows such as The Catch (ABC)and as recurring guest on Dynasty (CW/Netflix). He has worked closely with stars such as JK Simmons on Counterpart (Starz), the late great Miguel Ferrer in NCIS LA (CBS) and Ryan Phillippe on Shooter (USA Network) Recently he guest starred in Tyler Perry’s All the Queen’s Men (BET) working opposite Eva Marcille. Additionally, Julian has appeared in supporting roles in features such as Chip N Dale Rescue Rangers (Disney), A Christmas Open House (Discovery Plus) working with Victor Rasuk. Julian has also performed voice work in larger features such as Black Panther, Dunkirk and the Mummy starring Tom Cruise. Born in the UK, Julian has dual citizenship in the UK and USA. He’s a former Police Officer and ex-amateur champion boxer with a keen interest in martial arts, classic cars and riding motorcycles.</p>
+            <p>Julian Graham is a dynamic actor known for a variety of roles in TV and film. He has recurred on shows such as <strong>The Catch (ABC)</strong> and as a recurring guest on <strong>Dynasty (CW/Netflix)</strong>. He has worked closely with stars such as JK Simmons on <strong>Counterpart (Starz)</strong>, the late great Miguel Ferrer in <strong>NCIS LA (CBS)</strong> and Ryan Phillippe on <strong>Shooter (USA Network)</strong>.</p>
+            <p>Recently he guest starred in Tyler Perry’s <strong>All the Queen’s Men (BET)</strong> working opposite Eva Marcille. Additionally, Julian has appeared in supporting roles in features such as <strong>Chip N Dale Rescue Rangers (Disney)</strong>, <strong>A Christmas Open House (Discovery Plus)</strong> working with Victor Rasuk. Julian has also performed voice work in larger features such as <strong>Black Panther</strong>, <strong>Dunkirk</strong> and <strong>The Mummy</strong> starring Tom Cruise.</p>
+            <p>Born in the UK, Julian has dual citizenship in the UK and USA. He’s a former Police Officer and ex-amateur champion boxer with a keen interest in martial arts, classic cars and riding motorcycles.</p>
         </div>
     </section>
 
