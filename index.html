@@ -35,8 +35,33 @@
         .social-icons svg { fill: var(--text-main); transition: fill 0.3s; }
         .social-icons a:hover svg { fill: var(--accent); }
 
+        /* PHOTOS CAROUSEL */
+        #photos { padding: 100px 5% 40px; }
+        .carousel-container {
+            position: relative; max-width: 1200px; margin: 0 auto;
+            overflow: hidden; border-radius: 8px; background-color: #111;
+        }
+        .carousel-track { display: flex; transition: transform 0.6s ease-in-out; }
+        .carousel-slide {
+            min-width: 100%; display: grid; gap: 15px;
+            padding: 20px 45px; box-sizing: border-box; align-items: center;
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .carousel-slide img {
+            width: 100%; aspect-ratio: 4 / 5; border-radius: 4px;
+            object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .carousel-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(0,0,0,0.6); color: white; border: none;
+            padding: 15px; cursor: pointer; font-size: 24px; z-index: 10; border-radius: 50%;
+        }
+        .carousel-btn:hover { background: var(--accent); color: #000; }
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+
         /* SECTIONS */
-        section { padding: 100px 20px 60px; max-width: 1200px; margin: 0 auto; }
+        section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
         h2 { font-size: 2rem; text-transform: uppercase; letter-spacing: 2px; text-align: center; margin-bottom: 40px; border-bottom: 1px solid #333; padding-bottom: 15px; }
 
         /* REELS GRID */
@@ -51,15 +76,18 @@
         .video-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
         .video-container:hover img { transform: scale(1.05); }
 
-        /* Play Button Overlay */
+        /* Play Button - Matches standard Drive/YouTube style */
         .play-button {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 60px; height: 60px; background: rgba(212, 175, 55, 0.9);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2;
+            width: 68px; height: 48px; background: rgba(30, 30, 30, 0.8);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center; 
+            z-index: 2; transition: background 0.3s;
         }
+        .video-container:hover .play-button { background: rgba(255, 0, 0, 0.9); }
+        
         .play-button::after {
-            content: ""; border-style: solid; border-width: 10px 0 10px 20px;
-            border-color: transparent transparent transparent white; margin-left: 5px;
+            content: ""; border-style: solid; border-width: 12px 0 12px 20px;
+            border-color: transparent transparent transparent white; margin-left: 4px;
         }
 
         .video-container iframe, .video-wrapper iframe {
@@ -84,6 +112,7 @@
 
         @media (max-width: 768px) { 
             nav { flex-direction: column; gap: 15px; padding: 15px 0; }
+            .carousel-slide { grid-template-columns: 1fr; padding: 20px; }
             .contact-row { flex-direction: column; text-align: center; gap: 10px; } 
         }
     </style>
@@ -92,19 +121,35 @@
 
     <nav>
         <div class="nav-links">
+            <a href="#photos">Photos</a>
             <a href="#reels">Reels</a>
             <a href="#bio">Bio</a>
             <a href="#contact">Contact</a>
         </div>
         <div class="social-icons">
-            <a href="https://www.instagram.com/julian_graham" target="_blank">
+            <a href="https://www.instagram.com/itsjuliangraham" target="_blank">
                 <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
-            <a href="https://www.imdb.com/name/nm3850123/" target="_blank">
+            <a href="https://pro.imdb.com/name/nm4317247?ref_=hm_nv_usr_profile" target="_blank">
                 <svg width="24" height="24" viewBox="0 0 24 24"><path d="M23.52 0H.48C.215 0 0 .214 0 .478v23.044c0 .264.215.478.48.478h23.04c.265 0 .48-.214.48-.478V.478C24 .214 23.785 0 23.52 0zM6.417 17.5h-1.68V7.124h1.68V17.5zm5.182-5.717c0 .762-.11 1.402-.33 1.921-.22.519-.572.915-1.057 1.188-.485.273-1.116.409-1.893.409H7.26V7.124h1.154c.734 0 1.332.126 1.793.38.461.253.805.629 1.031 1.127.227.498.34 1.119.34 1.864v1.288zm5.72 5.717h-1.528V10.15l-1.353 5.432h-1.17l-1.353-5.432v7.35H10.45V7.124h1.967l1.318 5.253 1.32-5.253h1.965V17.5zm4.004-3.79c0 .77-.123 1.443-.37 2.016-.247.573-.655 1.011-1.223 1.312-.568.301-1.306.452-2.214.452h-1.455V7.124h1.597c.83 0 1.498.127 2.004.38.506.254.877.636 1.113 1.147.236.511.354 1.157.354 1.938v3.121z"/></svg>
             </a>
         </div>
     </nav>
+
+    <section id="photos">
+        <h2>Photos</h2>
+        <div class="carousel-container">
+            <button class="carousel-btn prev-btn" onclick="prevSlide()">&#10094;</button>
+            <div class="carousel-track">
+                <div class="carousel-slide">
+                    <img src="suit.png" alt="Headshot Suit">
+                    <img src="biker.png" alt="Biker Portrait">
+                    <img src="commercial.png" alt="Commercial Shot">
+                </div>
+            </div>
+            <button class="carousel-btn next-btn" onclick="nextSlide()">&#10095;</button>
+        </div>
+    </section>
 
     <section id="reels">
         <h2>Reels & Clips</h2>
@@ -134,7 +179,7 @@
                     <div class="play-button"></div>
                     <iframe data-src="https://drive.google.com/file/d/1k_v6uLfiZITcicYq5wIHr83UzE23bG4i/preview" allow="autoplay"></iframe>
                 </div>
-                <div class="reel-title">NCIS LA  The Catch  Counterpart</div>
+                <div class="reel-title">NCIS LA &nbsp;The Catch &nbsp;Counterpart</div>
             </div>
 
             <div class="reel-item">
@@ -175,8 +220,7 @@
     <section id="bio">
         <h2>Biography</h2>
         <div class="bio-content">
-            <p><strong>Julian Graham</strong> is a dynamic actor known for a variety of roles in TV and film. He has recurred on shows such as <em>The Catch</em> (ABC) and as a recurring guest on <em>Dynasty</em> (CW/Netflix). He has worked closely with stars such as JK Simmons on <em>Counterpart</em> (Starz), the late great Miguel Ferrer in <em>NCIS LA</em> (CBS) and Ryan Phillippe on <em>Shooter</em> (USA Network).</p>
-            <p>Recently he guest starred in Tyler Perry’s <em>All the Queen’s Men</em> (BET) working opposite Eva Marcille. Additionally, Julian has appeared in supporting roles in features such as <em>Chip 'N' Dale: Rescue Rangers</em> (Disney), <em>A Christmas Open House</em> (Discovery Plus) working with Victor Rasuk. Julian has also performed voice work in larger features such as <em>Black Panther</em>, <em>Dunkirk</em> and <em>The Mummy</em> starring Tom Cruise.</p>
+            <p><strong>Julian Graham</strong> is a dynamic actor known for a variety of roles in TV and film. He has recurred on shows such as <em>The Catch</em> (ABC) and as a recurring guest on <em>Dynasty</em> (CW/Netflix). He has worked closely with stars such as JK Simmons on <em>Counterpart</em> (Starz), the late great Miguel Ferrer in <em>NCIS LA</em> (CBS) and Ryan Phillippe on <em>Shooter</em> (USA Network). Recently he guest starred in Tyler Perry’s <em>All the Queen’s Men</em> (BET) working opposite Eva Marcille.</p>
             <p>Born in the UK, Julian has dual citizenship in the UK and USA. He’s a former Police Officer and ex-amateur champion boxer with a keen interest in martial arts, classic cars and riding motorcycles.</p>
         </div>
     </section>
@@ -190,7 +234,7 @@
             </div>
             <div class="contact-row">
                 <div><span class="contact-label">UK Agent:</span> Keddie Scott Associates — Richard Vincent</div>
-                <div><a href="tel:+4402071830605">0207 183 0605</a> <a href="mailto:richard@keddiescott.com">Email</a></div>
+                <div><a href="tel:+442034901050">0203 490 1050</a> <a href="mailto:richard@keddiescott.com">Email</a></div>
             </div>
             <div class="contact-row">
                 <div><span class="contact-label">LA Manager:</span> Midwest Talent — Betty McCormick</div>
@@ -198,7 +242,7 @@
             </div>
             <div class="contact-row">
                 <div><span class="contact-label">US Commercials:</span> Flick Commercials — Tina Kiratsoulis</div>
-               <div><a href="tel:+13102719111">310.271.9111</a> <div><a href="mailto:flick@flickcommercials.co.uk">Email</a></div>
+                <div><a href="tel:+13102719111">310.271.9111</a> <a href="mailto:flick@flickcommercials.co.uk">Email</a></div>
             </div>
         </div>
     </section>
@@ -213,6 +257,12 @@
             img.style.display = 'none';
             btn.style.display = 'none';
         }
+
+        const track = document.querySelector('.carousel-track');
+        let index = 0;
+        function updateCarousel() { track.style.transform = `translateX(-${index * 100}%)`; }
+        function nextSlide() { index = (index + 1) % 1; updateCarousel(); }
+        function prevSlide() { index = (index - 1 + 1) % 1; updateCarousel(); }
     </script>
 </body>
 </html>
