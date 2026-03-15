@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>YOUR NAME | Actor Portfolio</title>
+    <title>Julian Graham | Actor Portfolio</title>
     
     <style>
         /* CORE STYLES */
@@ -14,7 +14,7 @@
             --nav-bg: rgba(10, 10, 10, 0.95);
             --text-main: #f5f5f5;
             --text-muted: #a0a0a0;
-            --accent: #d4af37; 
+            --accent: #d4af37; /* Gold branding */
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -32,40 +32,40 @@
         }
         nav a {
             color: var(--text-main); text-decoration: none;
-            margin: 0 15px; font-size: 0.9rem; text-transform: uppercase;
+            margin: 0 12px; font-size: 0.85rem; text-transform: uppercase;
             letter-spacing: 1px; transition: color 0.3s;
         }
         nav a:hover { color: var(--accent); }
+        .resume-btn { 
+            border: 1px solid var(--accent); 
+            padding: 5px 12px; 
+            border-radius: 4px; 
+            color: var(--accent) !important; 
+        }
+        .resume-btn:hover { background: var(--accent); color: var(--bg-color) !important; }
 
         /* SECTIONS */
         section { padding: 100px 20px 60px; max-width: 1200px; margin: 0 auto; }
-        #photos { max-width: 100%; padding-left: 5%; padding-right: 5%; } 
-
         h2 {
             font-size: 2rem; text-transform: uppercase; letter-spacing: 2px;
             text-align: center; margin-bottom: 40px;
             border-bottom: 1px solid #333; padding-bottom: 15px;
         }
 
-        /* CAROUSEL STYLES */
+        /* PHOTOS CAROUSEL */
+        #photos { max-width: 100%; padding-left: 5%; padding-right: 5%; }
         .carousel-container {
-            position: relative; 
-            max-width: 1800px; 
-            width: 100%; 
-            margin: 0 auto;
+            position: relative; max-width: 1800px; margin: 0 auto;
             overflow: hidden; border-radius: 8px; background-color: #111;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .carousel-track { display: flex; transition: transform 0.6s ease-in-out; }
         .carousel-slide {
             min-width: 100%; display: grid; gap: 15px;
             padding: 20px 45px; box-sizing: border-box; align-items: center;
         }
-        
         .grid-3 { grid-template-columns: repeat(3, 1fr); }
         .grid-2 { grid-template-columns: repeat(2, 1fr); }
         .grid-1 { grid-template-columns: 1fr; }
-
         .carousel-slide img {
             width: 100%; height: auto; border-radius: 4px;
             object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
@@ -83,94 +83,74 @@
         .prev-btn { left: 0; border-radius: 0 4px 4px 0; }
         .next-btn { right: 0; border-radius: 4px 0 0 4px; }
 
-        /* REELS SECTION */
+        /* REELS GRID & VIDEO CONTAINERS */
         .reels-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
         }
         .reel-item { background: #1a1a1a; border-radius: 6px; padding: 10px; text-align: center; }
+        
+        /* The container for the thumbnail/play button approach */
+        .video-container {
+            position: relative; width: 100%; aspect-ratio: 16 / 9; 
+            background: #000; border-radius: 4px; cursor: pointer; overflow: hidden;
+        }
+        .video-container img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
+        }
+        .video-container:hover img { transform: scale(1.05); }
+
+        /* The container for standard embeds (Reels 4 and 7) */
         .video-wrapper {
             position: relative; padding-bottom: 56.25%; height: 0;
-            overflow: hidden; border-radius: 4px; margin-bottom: 10px;
-            background: #000;
+            overflow: hidden; border-radius: 4px; background: #000;
         }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .reel-title { font-weight: bold; font-size: 1rem; color: var(--text-main); margin-top: 10px; }
+
+        /* Play Button Overlay */
+        .play-button {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 60px; height: 60px; background: rgba(212, 175, 55, 0.85);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            z-index: 2; transition: all 0.3s;
+        }
+        .play-button::after {
+            content: ""; box-sizing: border-box; width: 0; height: 0; 
+            border-style: solid; border-width: 10px 0 10px 20px;
+            border-color: transparent transparent transparent white; margin-left: 5px;
+        }
+        .video-container:hover .play-button { background: rgba(212, 175, 55, 1); transform: translate(-50%, -50%) scale(1.1); }
+
+        /* Iframe inside thumbnail containers (hidden until clicked) */
+        .video-container iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            border: 0; display: none; z-index: 3;
+        }
+
+        .reel-title { font-weight: bold; font-size: 0.95rem; color: var(--text-main); margin-top: 10px; }
 
         /* BIO SECTION */
-        .bio-content { text-align: center; max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: var(--text-muted); }
+        .bio-content { text-align: left; max-width: 900px; margin: 0 auto; font-size: 1.1rem; color: var(--text-muted); }
+        .bio-content p { margin-bottom: 20px; }
 
-        /* CONTACT SECTION STYLES */
-        .contact-list {
-            max-width: 850px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
+        /* CONTACT SECTION */
+        .contact-list { max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
         .contact-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #1a1a1a;
-            padding: 15px 25px;
-            border-radius: 6px;
-            border-left: 4px solid var(--accent);
+            display: flex; align-items: center; justify-content: space-between;
+            background: #1a1a1a; padding: 15px 25px; border-radius: 6px; border-left: 4px solid var(--accent);
         }
-
-        .contact-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
+        .contact-info { display: flex; align-items: center; gap: 20px; }
         .contact-badge {
-            background: var(--accent);
-            color: var(--bg-color);
-            font-weight: bold;
-            font-size: 1.2rem;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            flex-shrink: 0;
+            background: var(--accent); color: var(--bg-color); font-weight: bold; font-size: 1.2rem;
+            width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 4px; flex-shrink: 0;
         }
+        .contact-text { color: var(--text-main); font-size: 1.05rem; }
+        .contact-icons a { color: var(--text-muted); text-decoration: none; margin-left: 15px; transition: color 0.3s; }
+        .contact-icons a:hover { color: var(--accent); }
 
-        .contact-text {
-            color: var(--text-main);
-            font-size: 1.05rem;
-            letter-spacing: 0.5px;
-        }
-
-        .contact-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .contact-icons a {
-            color: var(--text-muted);
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-        }
-
-        .contact-icons a:hover {
-            color: var(--accent);
-        }
-
-        /* MOBILE RESPONSIVENESS */
+        /* RESPONSIVENESS */
         @media (max-width: 768px) { 
-            nav a { margin: 0 8px; font-size: 0.8rem; } 
-            .contact-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-            .contact-icons {
-                align-self: flex-end; 
-            }
+            nav a { margin: 0 5px; font-size: 0.75rem; } 
+            .contact-row { flex-direction: column; align-items: flex-start; gap: 15px; }
         }
     </style>
 </head>
@@ -181,30 +161,29 @@
         <a href="#reels">Reels</a>
         <a href="#bio">Bio</a>
         <a href="#contact">Contact</a>
-        <a href="YOUR_IMDB_LINK_HERE" target="_blank">IMDb</a>
-        <a href="YOUR_INSTAGRAM_LINK_HERE" target="_blank">Instagram</a>
+        <a href="YOUR_IMDB_LINK" target="_blank">IMDb</a>
+        <a href="YOUR_RESUME_LINK" target="_blank" class="resume-btn">Resume</a>
     </nav>
 
     <section id="photos">
         <h2>Photos</h2>
-        
         <div class="carousel-container">
-            <button class="carousel-btn prev-btn">&#10094;</button>
+            <button class="carousel-btn prev-btn" onclick="prevSlide()">&#10094;</button>
             <div class="carousel-track">
                 <div class="carousel-slide grid-3">
-                    <img src="suit.jpg" alt="suit">
-                    <img src="biker.jpg" alt="biker">
-                    <img src="commercial.jpg" alt="commercial">
+                    <img src="suit.jpg" alt="Julian Graham Headshot">
+                    <img src="biker.jpg" alt="Julian Graham Biker Profile">
+                    <img src="commercial.jpg" alt="Julian Graham Commercial">
                 </div>
                 <div class="carousel-slide grid-2">
-                    <img src="astronaut.png" alt="astronaut">
-                    <img src="bike.jpg" alt="bike">
+                    <img src="astronaut.jpg" alt="Julian Graham Astronaut Role">
+                    <img src="bike.jpg" alt="Julian Graham Motorcycle">
                 </div>
                 <div class="carousel-slide grid-1">
-                    <img src="arms.jpg" alt="arms">
+                    <img src="arms.jpg" alt="Julian Graham Action Role">
                 </div>
             </div>
-            <button class="carousel-btn next-btn">&#10095;</button>
+            <button class="carousel-btn next-btn" onclick="nextSlide()">&#10095;</button>
         </div>
     </section>
 
@@ -213,26 +192,32 @@
         <div class="reels-grid">
             
             <div class="reel-item">
-                <div class="video-wrapper">
-                    <iframe src="https://drive.google.com/file/d/18gJNQ9y9nwav7JKcy3eZeevBHtIHZ9_C/preview" allowfullscreen></iframe>
+                <div class="video-container" onclick="playVideo(this)">
+                    <img src="Reel Still.jpg" alt="Theatrical Reel Thumbnail">
+                    <div class="play-button"></div>
+                    <iframe data-src="https://drive.google.com/file/d/18gJNQ9y9nwav7JKcy3eZeevBHtIHZ9_C/preview" allow="autoplay"></iframe>
                 </div>
                 <div class="reel-title">Theatrical Reel</div>
             </div>
-            
+
             <div class="reel-item">
-                <div class="video-wrapper">
-                    <iframe src="https://drive.google.com/file/d/1Zk9tH8klJAvNqWpyqabwZIfx1w5W10QX/preview" allowfullscreen></iframe>
+                <div class="video-container" onclick="playVideo(this)">
+                    <img src="Cobra Kai Still.jpg" alt="Cobra Kai Thumbnail">
+                    <div class="play-button"></div>
+                    <iframe data-src="https://drive.google.com/file/d/1Zk9tH8klJAvNqWpyqabwZIfx1w5W10QX/preview" allow="autoplay"></iframe>
                 </div>
                 <div class="reel-title">Cobra Kai</div>
             </div>
 
             <div class="reel-item">
-                <div class="video-wrapper">
-                    <iframe src="https://drive.google.com/file/d/1k_v6uLfiZITcicYq5wIHr83UzE23bG4i/preview" allowfullscreen></iframe>
+                <div class="video-container" onclick="playVideo(this)">
+                    <img src="Catch Still.jpg" alt="Drama Scenes Thumbnail">
+                    <div class="play-button"></div>
+                    <iframe data-src="https://drive.google.com/file/d/1k_v6uLfiZITcicYq5wIHr83UzE23bG4i/preview" allow="autoplay"></iframe>
                 </div>
                 <div class="reel-title">NCIS LA  The Catch  Counterpart</div>
             </div>
-            
+
             <div class="reel-item">
                 <div class="video-wrapper">
                     <iframe src="https://drive.google.com/file/d/13R5k_sEqYFcnBwtyawtXmE0j4O59pwre/preview" allowfullscreen></iframe>
@@ -241,15 +226,19 @@
             </div>
 
             <div class="reel-item">
-                <div class="video-wrapper">
-                    <iframe src="https://drive.google.com/file/d/11t7dp0dn9GwfuQ0TqZe3f8f49iHo3VJF/preview" allowfullscreen></iframe>
+                <div class="video-container" onclick="playVideo(this)">
+                    <img src="astronaut.png" alt="Commercials Thumbnail">
+                    <div class="play-button"></div>
+                    <iframe data-src="https://drive.google.com/file/d/11t7dp0dn9GwfuQ0TqZe3f8f49iHo3VJF/preview" allow="autoplay"></iframe>
                 </div>
                 <div class="reel-title">Commercials</div>
             </div>
 
             <div class="reel-item">
-                <div class="video-wrapper">
-                    <iframe src="https://drive.google.com/file/d/1prA39gquneciyF2ZWuyPI9F26wmkUFLa/preview" allowfullscreen></iframe>
+                <div class="video-container" onclick="playVideo(this)">
+                    <img src="Fight still.jpg" alt="Fight Scene Thumbnail">
+                    <div class="play-button"></div>
+                    <iframe data-src="https://drive.google.com/file/d/1prA39gquneciyF2ZWuyPI9F26wmkUFLa/preview" allow="autoplay"></iframe>
                 </div>
                 <div class="reel-title">All The Queen's Men Fight</div>
             </div>
@@ -267,96 +256,68 @@
     <section id="bio">
         <h2>Biography</h2>
         <div class="bio-content">
-            <p>strong>Julian Graham</strong> is a dynamic actor known for a variety of roles in TV and film. He has recurred on shows such as <em>The Catch</em> (ABC) and as a recurring guest on <em>Dynasty</em> (CW/Netflix). He has worked closely with stars such as JK Simmons on <em>Counterpart</em> (Starz), the late great Miguel Ferrer in <em>NCIS LA</em> (CBS), and Ryan Phillippe on <em>Shooter</em> (USA Network).</p>
-            <p>Recently, he guest starred in Tyler Perry’s <em>All the Queen’s Men</em> (BET), working opposite Eva Marcille. Additionally, Julian has appeared in supporting roles in features such as <em>Chip 'N Dale: Rescue Rangers</em> (Disney) and <em>A Christmas Open House</em> (Discovery Plus), working with Victor Rasuk. Julian has also performed voice work in larger features such as <em>Black Panther</em>, <em>Dunkirk</em>, and <em>The Mummy</em> starring Tom Cruise.</p>
-            <p>Born in the UK, Julian holds dual citizenship in the UK and USA. He is a former Police Officer and ex-amateur champion boxer with a keen interest in martial arts, classic cars, and riding motorcycles.</p></p>
+            <p><strong>Julian Graham</strong> is a dynamic actor known for a variety of roles in TV and film. He has recurred on shows such as <em>The Catch</em> (ABC) and as a recurring guest on <em>Dynasty</em> (CW/Netflix). He has worked closely with stars such as JK Simmons on <em>Counterpart</em> (Starz), the late great Miguel Ferrer in <em>NCIS LA</em> (CBS) and Ryan Phillippe on <em>Shooter</em> (USA Network).</p>
+            <p>Recently he guest starred in Tyler Perry’s <em>All the Queen’s Men</em> (BET) working opposite Eva Marcille. Additionally, Julian has appeared in supporting roles in features such as <em>Chip 'N' Dale: Rescue Rangers</em> (Disney), <em>A Christmas Open House</em> (Discovery Plus) working with Victor Rasuk. Julian has also performed voice work in larger features such as <em>Black Panther</em>, <em>Dunkirk</em> and <em>The Mummy</em> starring Tom Cruise.</p>
+            <p>Born in the UK, Julian has dual citizenship in the UK and USA. He’s a former Police Officer and ex-amateur champion boxer with a keen interest in martial arts, classic cars and riding motorcycles.</p>
         </div>
     </section>
 
     <section id="contact">
         <h2>Contact</h2>
         <div class="contact-list">
-            
             <div class="contact-row">
                 <div class="contact-info">
                     <span class="contact-badge">A</span>
                     <span class="contact-text">Southeast Agent - Houghton Talent - Mystie Buice</span>
                 </div>
                 <div class="contact-icons">
-                    <a href="tel:+14046039454" title="Call">
-                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                    </a>
-                    <a href="mailto:mystie@houghtontalent.com" title="Email">
-                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    </a>
+                    <a href="tel:+14046039454">Call</a>
+                    <a href="mailto:mystie@houghtontalent.com">Email</a>
                 </div>
             </div>
-
             <div class="contact-row">
                 <div class="contact-info">
                     <span class="contact-badge">M</span>
-                    <span class="contact-text">Los Angeles Manager - Midwest Talent Management - Betty McCormick</span>
+                    <span class="contact-text">LA Manager - Midwest Talent - Betty McCormick</span>
                 </div>
                 <div class="contact-icons">
-                    <a href="tel:+18187653785" title="Call">
-                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                    </a>
-                    <a href="mailto:betty@midwesttalent.com" title="Email"> 
-                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    </a>
+                    <a href="tel:+18187653785">Call</a>
+                    <a href="mailto:betty@midwesttalent.com">Email</a>
                 </div>
             </div>
-
-            <div class="contact-row">
-                <div class="contact-info">
-                    <span class="contact-badge">A</span>
-                    <span class="contact-text">UK Commercial Agent - Flick Commercials - Tina Kiratsoulis</span>
-                </div>
-                <div class="contact-icons">
-                    <a href="tel:+13102719111" title="Call"> 
-                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                    </a>
-                    <a href="mailto:flick@flickcommercials.com" title="Email"> 
-                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="contact-row">
-                <div class="contact-info">
-                    <span class="contact-badge">A</span>
-                    <span class="contact-text">UK Agent - Keddie Scott Associates - Richard Vincent</span>
-                </div>
-                <div class="contact-icons">
-                    <a href="tel:+442034901050" title="Call"> 
-                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                    </a>
-                    <a href="mailto:richard@keddiescott.com" title="Email"> 
-                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    </a>
-                </div>
-            </div>
-
         </div>
     </section>
 
     <script>
+        // VIDEO PLAYER LOGIC
+        function playVideo(container) {
+            const iframe = container.querySelector('iframe');
+            const img = container.querySelector('img');
+            const btn = container.querySelector('.play-button');
+            
+            // Set source and reveal iframe
+            iframe.src = iframe.getAttribute('data-src') + "?autoplay=1";
+            iframe.style.display = 'block';
+            img.style.display = 'none';
+            btn.style.display = 'none';
+        }
+
+        // CAROUSEL LOGIC
         const track = document.querySelector('.carousel-track');
-        const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-        const nextBtn = document.querySelector('.next-btn');
-        const prevBtn = document.querySelector('.prev-btn');
-        let currentIndex = 0;
-        let autoPlayInterval;
-
-        function updateCarousel() { track.style.transform = `translateX(-${currentIndex * 100}%)`; }
-        function nextSlide() { currentIndex = (currentIndex + 1) % slides.length; updateCarousel(); }
-        function prevSlide() { currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateCarousel(); }
-        function startAutoPlay() { autoPlayInterval = setInterval(nextSlide, 5000); }
-        function resetAutoPlay() { clearInterval(autoPlayInterval); startAutoPlay(); }
-
-        nextBtn.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
-        prevBtn.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
-        startAutoPlay();
+        let index = 0;
+        function updateCarousel() {
+            track.style.transform = `translateX(-${index * 100}%)`;
+        }
+        function nextSlide() {
+            index = (index + 1) % 3;
+            updateCarousel();
+        }
+        function prevSlide() {
+            index = (index - 1 + 3) % 3;
+            updateCarousel();
+        }
+        // Auto-play carousel every 6 seconds
+        setInterval(nextSlide, 6000);
     </script>
 </body>
 </html>
