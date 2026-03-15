@@ -51,6 +51,9 @@
             width: 100%; aspect-ratio: 4 / 5; border-radius: 4px;
             object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
+        .carousel-slide.single-photo { grid-template-columns: 1fr; justify-items: center; }
+        .carousel-slide.single-photo img { max-width: 400px; }
+
         .carousel-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
             background: rgba(0,0,0,0.6); color: white; border: none;
@@ -60,44 +63,48 @@
         .prev-btn { left: 10px; }
         .next-btn { right: 10px; }
 
-        /* SECTIONS */
+        /* REELS GRID */
         section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
         h2 { font-size: 2rem; text-transform: uppercase; letter-spacing: 2px; text-align: center; margin-bottom: 40px; border-bottom: 1px solid #333; padding-bottom: 15px; }
-
-        /* REELS GRID */
         .reels-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
         .reel-item { background: #1a1a1a; border-radius: 6px; padding: 10px; text-align: center; }
         
-        .video-container, .video-wrapper {
+        .video-container {
             position: relative; width: 100%; aspect-ratio: 16 / 9; 
-            background: #000; border-radius: 4px; overflow: hidden;
+            background: #000; border-radius: 4px; overflow: hidden; cursor: pointer;
         }
-        .video-container { cursor: pointer; }
         .video-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
         .video-container:hover img { transform: scale(1.05); }
 
-        /* Play Button - Matches standard Drive/YouTube style */
+        /* THE "WHITE RING" PLAY BUTTON (MATCHED TO GOOGLE DRIVE) */
         .play-button {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 68px; height: 48px; background: rgba(30, 30, 30, 0.8);
-            border-radius: 12px; display: flex; align-items: center; justify-content: center; 
-            z-index: 2; transition: background 0.3s;
+            width: 72px; height: 72px;
+            background: rgba(0, 0, 0, 0.45);
+            border: 5px solid rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; 
+            z-index: 2; transition: all 0.2s ease;
         }
-        .video-container:hover .play-button { background: rgba(255, 0, 0, 0.9); }
-        
+        .video-container:hover .play-button { 
+            background: rgba(0, 0, 0, 0.7);
+            border-color: #ffffff;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
         .play-button::after {
-            content: ""; border-style: solid; border-width: 12px 0 12px 20px;
-            border-color: transparent transparent transparent white; margin-left: 4px;
+            content: ""; border-style: solid; border-width: 15px 0 15px 26px;
+            border-color: transparent transparent transparent white; margin-left: 6px;
         }
 
-        .video-container iframe, .video-wrapper iframe {
+        .video-container iframe {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+            display: none; z-index: 3;
         }
-        .video-container iframe { display: none; z-index: 3; }
 
         .reel-title { font-weight: bold; font-size: 0.9rem; color: var(--text-main); margin-top: 10px; min-height: 40px; display: flex; align-items: center; justify-content: center; }
 
-        /* CONTACT */
+        /* BIO & CONTACT */
+        .bio-content { max-width: 800px; margin: 0 auto; color: var(--text-muted); line-height: 1.8; font-size: 1.1rem; }
         .contact-list { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
         .contact-row {
             display: flex; justify-content: space-between; align-items: center;
@@ -107,13 +114,11 @@
         .contact-row a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; margin-left: 15px; transition: 0.3s; }
         .contact-row a:hover { color: var(--text-main); }
 
-        /* BIO */
-        .bio-content { max-width: 800px; margin: 0 auto; color: var(--text-muted); line-height: 1.8; font-size: 1.1rem; }
-
         @media (max-width: 768px) { 
             nav { flex-direction: column; gap: 15px; padding: 15px 0; }
             .carousel-slide { grid-template-columns: 1fr; padding: 20px; }
-            .contact-row { flex-direction: column; text-align: center; gap: 10px; } 
+            .carousel-slide.single-photo img { max-width: 100%; }
+            .contact-row { flex-direction: column; text-align: center; gap: 10px; }
         }
     </style>
 </head>
@@ -145,6 +150,14 @@
                     <img src="suit.jpg" alt="Headshot Suit">
                     <img src="biker.jpg" alt="Biker Portrait">
                     <img src="commercial.jpg" alt="Commercial Shot">
+                </div>
+                <div class="carousel-slide">
+                    <img src="astronaut.png" alt="Astronaut Shot">
+                    <img src="bike.jpg" alt="Motorcycle Shot">
+                    <div style="background:transparent;"></div>
+                </div>
+                <div class="carousel-slide single-photo">
+                    <img src="arms.jpg" alt="Action Shot">
                 </div>
             </div>
             <button class="carousel-btn next-btn" onclick="nextSlide()">&#10095;</button>
@@ -183,8 +196,10 @@
             </div>
 
             <div class="reel-item">
-                <div class="video-wrapper">
-                    <iframe src="https://drive.google.com/file/d/13R5k_sEqYFcnBwtyawtXmE0j4O59pwre/preview" allowfullscreen></iframe>
+                <div class="video-container" onclick="playVideo(this)">
+                    <img src="British Still.png" alt="British Roles">
+                    <div class="play-button"></div>
+                    <iframe data-src="https://drive.google.com/file/d/13R5k_sEqYFcnBwtyawtXmE0j4O59pwre/preview" allow="autoplay"></iframe>
                 </div>
                 <div class="reel-title">British Roles</div>
             </div>
@@ -208,8 +223,10 @@
             </div>
 
             <div class="reel-item">
-                <div class="video-wrapper">
-                    <iframe src="https://drive.google.com/file/d/1hRRriXHfz1dqohFyB6adNT-oEkykOisu/preview" allowfullscreen></iframe>
+                <div class="video-container" onclick="playVideo(this)">
+                    <img src="Scene Still.png" alt="Full Scene">
+                    <div class="play-button"></div>
+                    <iframe data-src="https://drive.google.com/file/d/1hRRriXHfz1dqohFyB6adNT-oEkykOisu/preview" allow="autoplay"></iframe>
                 </div>
                 <div class="reel-title">All The Queen's Men Full Scene</div>
             </div>
@@ -220,8 +237,7 @@
     <section id="bio">
         <h2>Biography</h2>
         <div class="bio-content">
-            <p><strong>Julian Graham</strong> is a dynamic actor known for a variety of roles in TV and film. He has recurred on shows such as <em>The Catch</em> (ABC) and as a recurring guest on <em>Dynasty</em> (CW/Netflix). He has worked closely with stars such as JK Simmons on <em>Counterpart</em> (Starz), the late great Miguel Ferrer in <em>NCIS LA</em> (CBS) and Ryan Phillippe on <em>Shooter</em> (USA Network). Recently he guest starred in Tyler Perry’s <em>All the Queen’s Men</em> (BET) working opposite Eva Marcille.</p>
-            <p>Born in the UK, Julian has dual citizenship in the UK and USA. He’s a former Police Officer and ex-amateur champion boxer with a keen interest in martial arts, classic cars and riding motorcycles.</p>
+            <p><strong>Julian Graham</strong> is a dynamic actor known for a variety of roles in TV and film. Born in the UK, Julian has dual citizenship in the UK and USA. He’s a former Police Officer and ex-amateur champion boxer with a keen interest in martial arts, classic cars and riding motorcycles.</p>
         </div>
     </section>
 
@@ -240,14 +256,11 @@
                 <div><span class="contact-label">LA Manager:</span> Midwest Talent — Betty McCormick</div>
                 <div><a href="tel:+18187653785">818.765.3785</a> <a href="mailto:betty@midwesttalent.com">Email</a></div>
             </div>
-            <div class="contact-row">
-                <div><span class="contact-label">US Commercials:</span> Flick Commercials — Tina Kiratsoulis</div>
-                <div><a href="tel:+13102719111">310.271.9111</a> <a href="mailto:flick@flickcommercials.co.uk">Email</a></div>
-            </div>
         </div>
     </section>
 
     <script>
+        // Video Player Logic
         function playVideo(container) {
             const iframe = container.querySelector('iframe');
             const img = container.querySelector('img');
@@ -258,11 +271,34 @@
             btn.style.display = 'none';
         }
 
+        // Carousel Logic
         const track = document.querySelector('.carousel-track');
         let index = 0;
-        function updateCarousel() { track.style.transform = `translateX(-${index * 100}%)`; }
-        function nextSlide() { index = (index + 1) % 1; updateCarousel(); }
-        function prevSlide() { index = (index - 1 + 1) % 1; updateCarousel(); }
+        const totalSlides = 3;
+
+        function updateCarousel() { 
+            track.style.transform = `translateX(-${index * 100}%)`; 
+        }
+
+        function nextSlide() { 
+            index = (index + 1) % totalSlides; 
+            updateCarousel(); 
+        }
+
+        function prevSlide() { 
+            index = (index - 1 + totalSlides) % totalSlides; 
+            updateCarousel(); 
+        }
+
+        // Auto-scroll every 5 seconds
+        let autoScroll = setInterval(nextSlide, 5000);
+
+        document.querySelectorAll('.carousel-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                clearInterval(autoScroll);
+                autoScroll = setInterval(nextSlide, 5000);
+            });
+        });
     </script>
 </body>
 </html>
